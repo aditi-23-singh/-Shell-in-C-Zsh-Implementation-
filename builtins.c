@@ -191,3 +191,131 @@ char* find_command_in_path(const char* command,char**  env)
     return NULL;
 
 }
+
+// helper function to count env vars
+int count_env_vars(char** env)
+{
+    int count=0;
+    while(env[count])
+    {
+        count++;
+
+    }
+    return count;
+}
+//function to set an envrionement varibale
+
+char **command_setenv(char **args, char **env){
+
+    if(args[1]==NULL)
+    {
+        printf("Usage:  setenv VAR=value\nor\tsetenv <variable> <value>\n");
+        return env;
+
+    }
+
+    int env_count=count_env_vars(env);
+    char** new_env=malloc((env_count+2)*sizeof(char*));
+
+
+    if(!new_env)
+    {
+        perror("malloc");
+        return env;
+    }
+    // copy existing environment variables
+    for(size_t i=0;i<env_count;i++)
+    {
+        new_env[i]=my_strdup(env[i]);
+        if(!new_env[i]){
+            perror("strdup");
+            for(size_t j=0; j<i;j++)
+            {
+                free(new_env[j]);
+            }
+            free(new_env);
+            return env;
+
+        }
+    }
+
+    //determine the format of the output and create the new variable
+    char* new_var=NULL;
+    if(args[2]==NULL){  //format var=value
+        new_var=my_strdup(args[1]);
+    }
+    else{
+        new_var=malloc(my_strlen(args[1])+my_strlen(args[2])+2);
+        if(new_var)
+        {
+            sprintf(new_var, "%s=%s", args[1],args[2]);
+
+        }
+    }
+
+    if(!new_var)
+    {
+        perror("malloc");
+        for(size_t i=0;i<env_count;i++)
+        {
+            free(new_env[i]);
+        }
+        free(new_env);
+        return env;
+    }
+    new_env[env_count]=new_var;
+    new_env[env_count+1]= NULL;
+
+    // free the old env array
+
+    // for(size_t i=0;env[i];i++)
+    // {
+    //     free(env[i]);
+    // }
+    // free(env);
+
+    return new_env;
+}
+
+
+//function to unset environement variables
+char **command_unsetenv(char **args, char **env){
+    if(args[1]==NULL)
+    {
+        printf("Usage: unsetenv <variable>\n");
+        return env;
+    }
+
+
+    int env_count=count_env_vars(env);
+    char** new_env= malloc(env_count*sizeof(char*));
+    if(!new_env)
+    {
+        perror("malloc");
+        return env;
+
+    }
+    int j=0,found=0;
+    for(int i=0;i<env_count;i++)
+    {
+        if(my_strncmp(env[i],args[1],my_strlen(args[1]))==0 && env[i][my_strlen(args[1])]== '=')
+        {
+            found=1;
+            free(env[i]);  //free the matching variable
+
+        }   else{
+            new_env[j++]=env[i];
+
+        } 
+    }
+    if(!found){
+        printf("Variable %s not found in environment\n",args[1]);
+        free(new_env);
+        return env;
+
+    }
+    new_env[j]=NULL;
+    // free(env);
+
+    return new_env;
+}
