@@ -1,5 +1,5 @@
 TARGET= myshell
-OBJ= main.c input_parser.c helpers.c builtins.c
+OBJ= main.c input_parser.c helpers.c builtins.c executor.c
 CFLAGS= -Wall -Wextra -Werror
 CC= gcc
 

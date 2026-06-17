@@ -1,0 +1,5 @@
+hello
+my 
+name is
+aditi singh
+i am saying from file.txt

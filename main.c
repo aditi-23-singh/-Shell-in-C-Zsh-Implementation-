@@ -40,9 +40,9 @@ int shell_builts(char **args, char **env, char *initial_directory)
         printf("I am exiting\n");
         exit(EXIT_SUCCESS);
     }else{
-        //not a built in command
+        //not a built in command, execute as external command
 
-        // executor();
+        return executor(args,env);
     }
    
 }

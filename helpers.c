@@ -16,6 +16,7 @@ int my_strcmp(const char* str1, const char* str2)
     return *(unsigned char*)str1 - *(unsigned char*)str2;
 }
 
+//length of the string 
 int my_strlen(const char* str)
 {
             if(str==NULL)
@@ -28,6 +29,8 @@ int my_strlen(const char* str)
     }
     return len;
 }
+
+
 //0: strings are equal to n characters
 // <0: str1<str2
 // >0: str1>str2
@@ -52,6 +55,8 @@ int my_strncmp(const char* str1,const char* str2,size_t n)
     }
     return (unsigned char)str1[i]-(unsigned char)str2[i]; // if one string is shorter than the other
 }
+
+// search the environement variables for the speicified name and return 
 char* my_getenv(const char* name, char** env)
 {
     if(name==NULL || env == NULL)
@@ -72,6 +77,8 @@ char* my_getenv(const char* name, char** env)
     return NULL;
 
 }
+
+// copies the content of the source into the destination string
 char* my_strcpy(char* dest, const char* src)
 {
     if(src==NULL)
@@ -86,6 +93,8 @@ char* my_strcpy(char* dest, const char* src)
         *dest='\0';
         return ret;
 }
+
+// create a duplicate of the input string by allocating new memory
 char * my_strdup(const char* str)
 {
     if(str==NULL)
@@ -103,6 +112,8 @@ char * my_strdup(const char* str)
 
 }
 
+
+// locates the first occurrence of a character in a string 
 char* my_strchr(const char* str, char c)
 {
     while(*str)
@@ -114,6 +125,8 @@ char* my_strchr(const char* str, char c)
     }
     return NULL;
 }
+
+// tokenizes a string by splitting it based on aset of deliemter characters
 char* my_strtok(char* input_string, const char* delimeter)
 {
     static char* next_token=NULL;
@@ -149,5 +162,21 @@ char* my_strtok(char* input_string, const char* delimeter)
         }
         return token;
 
-
 } 
+
+
+// copies upto n characters from the source string to the destination string, ensuring null-termination
+char* my_strncpy(char* dest, const char* src, size_t n)
+{
+    size_t i;
+    for(i=0;i<n && src[i]!='\0';i++)
+    {
+        dest[i]=src[i];
+
+    }
+    for(;i<n;i++)
+    {
+        dest[i]='\0';
+    }
+    return dest;
+}

@@ -10,7 +10,7 @@ char** parse_input(char* input)
     if(!tokens)
     {
         perror("Malloc");
-        exit(EXIT_FAILURE);
+        exit(1);
     }
 
     for(size_t i=0;i<input[i];i++)
@@ -25,7 +25,7 @@ char** parse_input(char* input)
         if(!tokens[position])
         {
             perror("Malloc");
-            exit(EXIT_FAILURE);
+            exit(1);
         }  
         for(size_t j=0;j<token_length;j++)
         {
